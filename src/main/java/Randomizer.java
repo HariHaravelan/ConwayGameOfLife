@@ -2,13 +2,23 @@ import java.util.Random;
 
 public class Randomizer {
 
-    private int aliveCellsForTen;
+    private int aliveCellsForEveryTenCell;
 
-    public Randomizer(int aliveCellsForTen) {
-        this.aliveCellsForTen = aliveCellsForTen;
+    public Randomizer(int aliveCellsForEveryTenCell) {
+        this.aliveCellsForEveryTenCell = aliveCellsForEveryTenCell;
     }
 
-    public boolean getNext() {
-        return new Random().nextInt(10) < aliveCellsForTen;
+    private boolean getNext() {
+        return new Random().nextInt(10) < aliveCellsForEveryTenCell;
+    }
+
+    public Cell[][] loadCells(int size) {
+        Cell[][] cells = new Cell[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < cells[0].length; j++) {
+                cells[i][j] = new Cell(getNext());
+            }
+        }
+        return cells;
     }
 }

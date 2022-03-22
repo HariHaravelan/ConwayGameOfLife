@@ -1,20 +1,10 @@
 public class Grid {
     private Cell[][] cells;
-    private Randomizer randomizer;
 
     public Grid(int size, Randomizer randomizer) {
-        this.cells = new Cell[size][size];
-        this.randomizer = randomizer;
-        loadCells();
+        this.cells = randomizer.loadCells(size);
     }
 
-    private void loadCells() {
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[0].length; j++) {
-                cells[i][j] = new Cell(randomizer.getNext());
-            }
-        }
-    }
 
     public boolean isOutOfBound(int maxSize, int i, int j) {
         return (i < 0 || i == maxSize) || (j < 0 || j == maxSize);
@@ -43,7 +33,6 @@ public class Grid {
         for (int i = 0; i < newCells.length; i++) {
             for (int j = 0; j < newCells[0].length; j++) {
                 Cell cell = new Cell(false);
-               // System.out.println(i + "\t" + j + "\t" +getAliveNeighboursCount(i,j));
                 cell.updateStatus(getAliveNeighboursCount(i, j));
                 newCells[i][j] = cell;
             }
@@ -56,10 +45,22 @@ public class Grid {
         StringBuilder gridString = new StringBuilder();
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[0].length; j++) {
-                gridString.append(cells[i][j].isAlive() ? "*" : "-");
+                gridString.append(cells[i][j].isAlive() ? "*\t" : "-\t");
             }
             gridString.append("\n");
         }
         return gridString.toString();
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Randomizer randomizer = new Randomizer(4);
+        Grid grid = new Grid(4, randomizer);
+        System.out.println(grid);
+
+        for (int i = 0; i < 10; i++) {
+            Thread.sleep(100);
+            grid.nextCycle();
+            System.out.println(grid);
+        }
     }
 }
