@@ -1,3 +1,5 @@
+package com.conway.game;
+
 public class Cell {
     private boolean alive;
 

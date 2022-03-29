@@ -1,3 +1,5 @@
+package com.conway.game;
+
 import java.util.Random;
 
 public class Randomizer {
@@ -9,7 +11,7 @@ public class Randomizer {
     }
 
     private boolean getNext() {
-        return new Random().nextInt(10) < aliveCellsForEveryTenCell;
+        return new Random().nextInt(10) <= aliveCellsForEveryTenCell;
     }
 
     public Cell[][] loadCells(int size) {

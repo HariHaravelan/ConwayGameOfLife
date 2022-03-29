@@ -1,3 +1,5 @@
+package com.conway.game;
+
 public class Grid {
     private Cell[][] cells;
 
@@ -6,21 +8,24 @@ public class Grid {
     }
 
 
-    public boolean isOutOfBound(int maxSize, int i, int j) {
+    private boolean isOutOfBound(int maxSize, int i, int j) {
         return (i < 0 || i == maxSize) || (j < 0 || j == maxSize);
     }
 
 
     int getAliveNeighboursCount(int xPos, int yPos) {
+        int count = 0;
         int aliveNeighboursCount = 0;
         for (int i = xPos - 1; i <= xPos + 1; i++) {
             for (int j = yPos - 1; j <= yPos + 1; j++) {
                 if (isOutOfBound(cells.length, i, j) || (i == xPos && j == yPos)) {
                     continue;
                 }
+                count++;
                 aliveNeighboursCount += cells[i][j].isAlive() ? 1 : 0;
             }
         }
+        System.out.println(count);
         return aliveNeighboursCount;
     }
 
@@ -54,7 +59,7 @@ public class Grid {
 
     public static void main(String[] args) throws InterruptedException {
         Randomizer randomizer = new Randomizer(4);
-        Grid grid = new Grid(4, randomizer);
+        Grid grid = new Grid(25, randomizer);
         System.out.println(grid);
 
         for (int i = 0; i < 10; i++) {
